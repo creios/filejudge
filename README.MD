@@ -11,7 +11,7 @@
 
 use Creios\FileJudge\FileJudge;
 
-$passed = (new FileJudge(__DIR__ . "/../assets/image.png"))
+$passed = (new FileJudge("./image.png"))
     ->setAssertedMediaType("image")
     ->setAssertedMediaTypeSubtype("png")
     ->setAssertedMaxFileSize(1337)
@@ -30,11 +30,11 @@ if($passed){
 You can not only validate files against generally attributes like file size and media type but also images with specifically attributes like width and height.
 
 ```php
-<?php
+<php
 
 use Creios\FileJudge\ImageJudge;
 
-$passed = (new ImageJudge(__DIR__ . "/../assets/image.png"))
+$passed = (new ImageJudge("./image.png"))
     ->setAssertedMaxHeight(101)
     ->setAssertedMinHeight(99)
     ->judge();
