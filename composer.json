@@ -1,6 +1,6 @@
 {
   "name": "creios/filejudge",
-  "description": "Server-side validation of files",
+  "description": "Server-side validation of files and images",
   "type": "library",
   "license": "MIT",
   "authors": [
