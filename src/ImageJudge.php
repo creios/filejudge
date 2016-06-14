@@ -46,19 +46,10 @@ class ImageJudge extends FileJudge
     /**
      * @return bool
      */
-    protected function judgeMinWidth()
+    protected function judgeMaxHeight()
     {
-        $this->actualWidth = getimagesize($this->filepath)[0];
-        return $this->greaterEquals($this->actualWidth, $this->assertedMinWidth);
-    }
-
-    /**
-     * @return bool
-     */
-    protected function judgeMaxWidth()
-    {
-        $this->actualWidth = getimagesize($this->filepath)[0];
-        return $this->lesserEquals($this->actualWidth, $this->assertedMaxWidth);
+        $this->actualHeight = getimagesize($this->filepath)[1];
+        return $this->lesserEquals($this->actualHeight, $this->assertedMaxHeight);
     }
 
     /**
@@ -73,10 +64,19 @@ class ImageJudge extends FileJudge
     /**
      * @return bool
      */
-    protected function judgeMaxHeight()
+    protected function judgeMaxWidth()
     {
-        $this->actualHeight = getimagesize($this->filepath)[1];
-        return $this->lesserEquals($this->actualHeight, $this->assertedMaxHeight);
+        $this->actualWidth = getimagesize($this->filepath)[0];
+        return $this->lesserEquals($this->actualWidth, $this->assertedMaxWidth);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function judgeMinWidth()
+    {
+        $this->actualWidth = getimagesize($this->filepath)[0];
+        return $this->greaterEquals($this->actualWidth, $this->assertedMinWidth);
     }
 
     /**

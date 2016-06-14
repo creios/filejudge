@@ -8,8 +8,9 @@ class TestFileJudge extends \PHPUnit_Framework_TestCase
     public function testMediaType()
     {
         $fileJudge = (new FileJudge(__DIR__ . "/../assets/image.png"))
-            ->setAssertedMediaType("image")
-            ->setAssertedMediaTypeSubtype("png");
+            ->addAssertedMediaType("image")
+            ->addAssertedMediaTypeSubtype("png")
+            ->addAssertedMediaTypeSubtype("jpg");
         $this->assertTrue($fileJudge->judge());
         $this->assertEquals("image", $fileJudge->getActualMediaType());
         $this->assertEquals("png", $fileJudge->getActualMediaTypeSubtype());

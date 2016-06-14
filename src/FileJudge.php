@@ -25,13 +25,13 @@ class FileJudge
      */
     protected $actualFileSize;
     /**
-     * @var string
+     * @var string[]
      */
-    protected $assertedMediaType;
+    protected $assertedMediaTypes = array();
     /**
-     * @var string
+     * @var string[]
      */
-    protected $assertedMediaTypeSubtype;
+    protected $assertedMediaTypeSubtypes = array();
     /**
      * @var int
      */
@@ -60,19 +60,18 @@ class FileJudge
     {
         if ($this->assertedMaxFileSize != null && !$this->judgeMaxFileSize()) return false;
         if ($this->assertedMinFileSize != null && !$this->judgeMinFileSize()) return false;
-        if ($this->assertedMediaType != null && !$this->judgeMediaType()) return false;
-        if ($this->assertedMediaTypeSubtype != null && !$this->judgeMediaTypeSubtype()) return false;
+        if (count($this->assertedMediaTypes) > 0 && !$this->judgeMediaType()) return false;
+        if (count($this->assertedMediaTypeSubtypes) > 0 && !$this->judgeMediaTypeSubtype()) return false;
         return true;
     }
 
     /**
-     * @param $actual
-     * @param $asserted
      * @return bool
      */
-    protected function equal($actual, $asserted)
+    protected function judgeMaxFileSize()
     {
-        return $actual === $asserted;
+        $this->actualFileSize = filesize($this->filepath);
+        return $this->lesserEquals($this->actualFileSize, $this->assertedMaxFileSize);
     }
 
     /**
@@ -80,9 +79,9 @@ class FileJudge
      * @param $asserted
      * @return bool
      */
-    protected function greater($actual, $asserted)
+    protected function lesserEquals($actual, $asserted)
     {
-        return $actual > $asserted;
+        return $this->lesser($actual, $asserted) || $this->equal($actual, $asserted);
     }
 
     /**
@@ -100,6 +99,25 @@ class FileJudge
      * @param $asserted
      * @return bool
      */
+    protected function equal($actual, $asserted)
+    {
+        return $actual === $asserted;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function judgeMinFileSize()
+    {
+        $this->actualFileSize = filesize($this->filepath);
+        return $this->greaterEquals($this->actualFileSize, $this->assertedMinFileSize);
+    }
+
+    /**
+     * @param $actual
+     * @param $asserted
+     * @return bool
+     */
     protected function greaterEquals($actual, $asserted)
     {
         return $this->greater($actual, $asserted) || $this->equal($actual, $asserted);
@@ -110,9 +128,9 @@ class FileJudge
      * @param $asserted
      * @return bool
      */
-    protected function lesserEquals($actual, $asserted)
+    protected function greater($actual, $asserted)
     {
-        return $this->lesser($actual, $asserted) || $this->equal($actual, $asserted);
+        return $actual > $asserted;
     }
 
     /**
@@ -122,7 +140,7 @@ class FileJudge
     {
         $finfo = new \finfo(FILEINFO_MIME_TYPE);
         $this->actualMediaType = explode("/", $finfo->file($this->filepath))[0];
-        return $this->equal($this->assertedMediaType, $this->actualMediaType);
+        return in_array($this->actualMediaType, $this->assertedMediaTypes);
     }
 
     /**
@@ -132,25 +150,7 @@ class FileJudge
     {
         $finfo = new \finfo(FILEINFO_MIME_TYPE);
         $this->actualMediaTypeSubtype = explode("/", $finfo->file($this->filepath))[1];
-        return $this->equal($this->assertedMediaTypeSubtype, $this->actualMediaTypeSubtype);
-    }
-
-    /**
-     * @return bool
-     */
-    protected function judgeMaxFileSize()
-    {
-        $this->actualFileSize = filesize($this->filepath);
-        return $this->lesserEquals($this->actualFileSize, $this->assertedMaxFileSize);
-    }
-
-    /**
-     * @return bool
-     */
-    protected function judgeMinFileSize()
-    {
-        $this->actualFileSize = filesize($this->filepath);
-        return $this->greaterEquals($this->actualFileSize, $this->assertedMinFileSize);
+        return in_array($this->actualMediaTypeSubtype, $this->assertedMediaTypeSubtypes);
     }
 
     /**
@@ -181,9 +181,9 @@ class FileJudge
      * @param string $assertedMediaTypeSubtype
      * @return $this
      */
-    public function setAssertedMediaTypeSubtype($assertedMediaTypeSubtype)
+    public function addAssertedMediaTypeSubtype($assertedMediaTypeSubtype)
     {
-        $this->assertedMediaTypeSubtype = $assertedMediaTypeSubtype;
+        $this->assertedMediaTypeSubtypes[] = $assertedMediaTypeSubtype;
         return $this;
     }
 
@@ -191,9 +191,9 @@ class FileJudge
      * @param string $assertedMediaType
      * @return $this
      */
-    public function setAssertedMediaType($assertedMediaType)
+    public function addAssertedMediaType($assertedMediaType)
     {
-        $this->assertedMediaType = $assertedMediaType;
+        $this->assertedMediaTypes[] = $assertedMediaType;
         return $this;
     }
 

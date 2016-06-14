@@ -12,8 +12,8 @@
 use Creios\FileJudge\FileJudge;
 
 $passed = (new FileJudge("./image.png"))
-    ->setAssertedMediaType("image")
-    ->setAssertedMediaTypeSubtype("png")
+    ->addAssertedMediaType("image")
+    ->addAssertedMediaTypeSubtype("png")
     ->setAssertedMaxFileSize(1337)
     ->setAssertedMinFileSize(42)
     ->judge();
