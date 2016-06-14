@@ -30,7 +30,7 @@ if($passed){
 You can not only validate files against generally attributes like file size and media type but also images with specifically attributes like width and height.
 
 ```php
-<php
+<?php
 
 use Creios\FileJudge\ImageJudge;
 
