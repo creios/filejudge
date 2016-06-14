@@ -95,11 +95,21 @@ class FileJudge
         return $actual < $asserted;
     }
 
+    /**
+     * @param $actual
+     * @param $asserted
+     * @return bool
+     */
     protected function greaterEquals($actual, $asserted)
     {
         return $this->greater($actual, $asserted) || $this->equal($actual, $asserted);
     }
 
+    /**
+     * @param $actual
+     * @param $asserted
+     * @return bool
+     */
     protected function lesserEquals($actual, $asserted)
     {
         return $this->lesser($actual, $asserted) || $this->equal($actual, $asserted);
