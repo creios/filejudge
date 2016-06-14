@@ -6,11 +6,14 @@
 
 ```php
 <?php
-use Creios\FileJudge\ImageJudge;
+use Creios\FileJudge\FileJudge;
 
-$passed = (new ImageJudge(__DIR__ . "/../assets/image.png"))
-            ->setAssertedMaxWidth(100)
-            ->setAssertedMinWidth(99)->judge();
+$passed = (new FileJudge(__DIR__ . "/../assets/image.png"))
+ ->setAssertedMediaType("image")
+ ->setAssertedMediaTypeSubtype("png")
+ ->setAssertedMaxFileSize(1337)
+ ->setAssertedMinFileSize(42)
+ ->judge();
 
 if($passed){
     echo "File passed validation";
