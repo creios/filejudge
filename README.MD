@@ -11,6 +11,7 @@ use Creios\FileJudge\ImageJudge;
 $passed = (new ImageJudge(__DIR__ . "/../assets/image.png"))
             ->setAssertedMaxWidth(100)
             ->setAssertedMinWidth(99)->judge();
+
 if($passed){
     echo "File passed validation";
 }else{
