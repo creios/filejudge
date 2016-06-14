@@ -1,0 +1,23 @@
+{
+  "name": "creios/filejudge",
+  "description": "Server-side validation of files",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Tim Tegeler",
+      "email": "tegeler@creios.net"
+    }
+  ],
+  "require": {
+    "php": ">=5.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.8.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Creios\\FileJudge\\": "src"
+    }
+  }
+}

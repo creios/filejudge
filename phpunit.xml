@@ -1,0 +1,21 @@
+<phpunit bootstrap="vendor/autoload.php">
+    <php>
+        <includePath>.</includePath>
+        <ini name="date.timezone" value="Europe/Berlin"/>
+    </php>
+    <logging>
+        <log type="coverage-clover" target="phpunit/logs/clover.xml"/>
+        <log type="json" target="phpunit/logs/coveralls-upload.json"/>
+    </logging>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
+    <testsuites>
+        <testsuite name="tests">
+            <file>phpunit/tests/TestFileJudge.php</file>
+            <file>phpunit/tests/TestImageJudge.php</file>
+        </testsuite>
+    </testsuites>
+</phpunit>
