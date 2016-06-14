@@ -47,12 +47,6 @@ You can use [composer](https://getcomposer.org/) to download and install filejud
 ### composer.json
 ```json
 {
-    "repositories": [
-        {
-        "url": "https://github.com/creios/filejudge.git",
-        "type": "git"
-        }
-    ],
     "require": {
         "creios/filejudge": "^1.0.0"
     }
