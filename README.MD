@@ -4,8 +4,11 @@
 [![Coverage Status](https://coveralls.io/repos/creios/filejudge/badge.svg?branch=master&service=github)](https://coveralls.io/github/creios/filejudge?branch=master)
 [![GitHub license](https://img.shields.io/github/license/creios/filejudge.svg)]()
 
+**Filejudge** is a validation library for Files and Images
+
 ```php
 <?php
+
 use Creios\FileJudge\FileJudge;
 
 $passed = (new FileJudge(__DIR__ . "/../assets/image.png"))
@@ -20,6 +23,21 @@ if($passed){
 }else{
     echo "File didn't pass validation";
 }
+```
+
+## Imagejudge
+
+You can not only validate files against generally attributes like file size and media type but also images with specifically attributes like width and height.
+
+```php
+<?php
+
+use Creios\FileJudge\ImageJudge;
+
+$passed = (new ImageJudge(__DIR__ . "/../assets/image.png"))
+    ->setAssertedMaxHeight(101)
+    ->setAssertedMinHeight(99)
+    ->judge();
 ```
 
 ## Install
