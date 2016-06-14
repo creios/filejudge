@@ -4,7 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/creios/filejudge/badge.svg?branch=master&service=github)](https://coveralls.io/github/creios/filejudge?branch=master)
 [![GitHub license](https://img.shields.io/github/license/creios/filejudge.svg)]()
 
-**Filejudge** is a validation library for Files and Images
+**Filejudge** is a validation library for files and images
 
 ```php
 <?php
