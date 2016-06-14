@@ -9,11 +9,11 @@
 use Creios\FileJudge\FileJudge;
 
 $passed = (new FileJudge(__DIR__ . "/../assets/image.png"))
- ->setAssertedMediaType("image")
- ->setAssertedMediaTypeSubtype("png")
- ->setAssertedMaxFileSize(1337)
- ->setAssertedMinFileSize(42)
- ->judge();
+    ->setAssertedMediaType("image")
+    ->setAssertedMediaTypeSubtype("png")
+    ->setAssertedMaxFileSize(1337)
+    ->setAssertedMinFileSize(42)
+    ->judge();
 
 if($passed){
     echo "File passed validation";
