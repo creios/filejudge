@@ -1,5 +1,3 @@
-![Creiwork Logo](image/creiwork.png?raw=true)
-
 # Filejudge - I am the law
 
 [![Build Status](https://travis-ci.org/creios/filejudge.svg?branch=master)](https://travis-ci.org/creios/filejudge)
