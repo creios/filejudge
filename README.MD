@@ -12,13 +12,13 @@
 use Creios\FileJudge\FileJudge;
 
 $judgement = (new FileJudge())
-    //establish your laws
+    //establish your constraints
     ->addAssertedMediaType("text")
     ->addAssertedMediaTypeSubtype("html")
     ->addAssertedMediaTypeSubtype("xml")
     ->setAssertedMaxFileSize(1337)
     ->setAssertedMinFileSize(42)
-    //judge on basis of your laws
+    //judge on basis of your constraints
     ->judge("./template.html");
 
 //evaluate the judgement
@@ -39,10 +39,10 @@ You can not only validate files against generally attributes like file size and 
 use Creios\FileJudge\ImageJudge;
 
 $judgement = (new ImageJudge())
-    //establish your laws
+    //establish your constraints
     ->setAssertedMaxHeight(101)
     ->setAssertedMinHeight(99)
-    //judge on basis of your laws
+    //judge on basis of your constraints
     ->judge("./image.png");
 ```
 
