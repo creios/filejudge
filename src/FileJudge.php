@@ -44,22 +44,13 @@ class FileJudge
     protected $assertedMinFileSize;
 
     /**
-     * @param string $filepath
+     * @param $filepath
+     * @return Judgement\FileJudgement
      * @throws \Exception
      */
-    public function __construct($filepath)
+    public function judge($filepath)
     {
-        if (!file_exists($filepath)) {
-            throw new \Exception("File does not exist");
-        }
-        $this->filepath = $filepath;
-    }
-
-    /**
-     * @return Judgement\FileJudgement
-     */
-    public function judge()
-    {
+        $this->setFilepath($filepath);
         $fileJudgementBuilder = (new FileJudgementBuilder())->passed();
         $fileJudgementBuilder = $this->actualJudge($fileJudgementBuilder);
         return $fileJudgementBuilder->build();
@@ -221,5 +212,18 @@ class FileJudge
         $this->assertedMinFileSize = $assertedMinFileSize;
         return $this;
     }
+
+    /**
+     * @param string $filepath
+     * @throws \Exception
+     */
+    protected function setFilepath($filepath)
+    {
+        if (!file_exists($filepath)) {
+            throw new \Exception("File does not exist");
+        }
+        $this->filepath = $filepath;
+    }
+
 
 }

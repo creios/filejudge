@@ -37,10 +37,13 @@ class ImageJudge extends FileJudge
     protected $assertedMaxHeight;
 
     /**
+     * @param $filepath
      * @return Judgement\ImageJudgement
+     * @throws \Exception
      */
-    public function judge()
+    public function judge($filepath)
     {
+        $this->setFilepath($filepath);
         $imageJudgementBuilder = (new ImageJudgementBuilder())->passed();
         /** @var ImageJudgementBuilder $imageJudgementBuilder */
         $imageJudgementBuilder = parent::actualJudge($imageJudgementBuilder);

@@ -7,10 +7,10 @@ class TestFileJudge extends \PHPUnit_Framework_TestCase
 
     public function testMediaType()
     {
-        $fileJudgement = (new FileJudge(__DIR__ . "/../assets/image.png"))
+        $fileJudgement = (new FileJudge())
             ->addAssertedMediaType("image")
             ->addAssertedMediaTypeSubtype("png")
-            ->addAssertedMediaTypeSubtype("jpg")->judge();
+            ->addAssertedMediaTypeSubtype("jpg")->judge(__DIR__ . "/../assets/image.png");
 
         $this->assertTrue($fileJudgement->isPassed());
         $this->assertEquals("image", $fileJudgement->getActualMediaType());
@@ -19,9 +19,9 @@ class TestFileJudge extends \PHPUnit_Framework_TestCase
 
     public function testGreater()
     {
-        $fileJudgement = (new FileJudge(__DIR__ . "/../assets/image.png"))
+        $fileJudgement = (new FileJudge())
             ->setAssertedMaxFileSize(2479123)
-            ->setAssertedMinFileSize(1000)->judge();
+            ->setAssertedMinFileSize(1000)->judge(__DIR__ . "/../assets/image.png");
         $this->assertTrue($fileJudgement->isPassed());
         $this->assertEquals(5447, $fileJudgement->getActualFileSize());
     }
@@ -29,7 +29,7 @@ class TestFileJudge extends \PHPUnit_Framework_TestCase
     public function testException()
     {
         $this->setExpectedException('\Exception', 'File does not exist');
-        new FileJudge(__DIR__ . "/nicht-vorhanden.png");
+        (new FileJudge())->judge(__DIR__ . "/nicht-vorhanden.png");
     }
 
 }
