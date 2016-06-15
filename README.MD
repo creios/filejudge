@@ -6,11 +6,6 @@
 
 **Filejudge** is a validation library for files and images
 
-* Media Type (MIME-Type) including Subtype
-* Minimum / maximum file size
-* Minimum / maximum height (images only)
-* Minimum / maximum width (images only)
-
 ```php
 <?php
 
@@ -44,6 +39,15 @@ $passed = (new ImageJudge("./image.png"))
     ->setAssertedMinHeight(99)
     ->judge();
 ```
+
+## Constraints
+
+With Filejudge you can judge on the basis of a series of constraints.
+
+* Media Type (MIME-Type) including Subtype
+* Minimum / maximum file size
+* Minimum / maximum height (images only)
+* Minimum / maximum width (images only)
 
 ## Install
 
