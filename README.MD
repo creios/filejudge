@@ -11,14 +11,18 @@
 
 use Creios\FileJudge\FileJudge;
 
-$passed = (new FileJudge("./image.png"))
-    ->addAssertedMediaType("image")
-    ->addAssertedMediaTypeSubtype("png")
+$judgement = (new FileJudge())
+    //establish your laws
+    ->addAssertedMediaType("text")
+    ->addAssertedMediaTypeSubtype("html")
+    ->addAssertedMediaTypeSubtype("xml")
     ->setAssertedMaxFileSize(1337)
     ->setAssertedMinFileSize(42)
-    ->judge();
+    //judge on basis of your laws
+    ->judge("./template.html");
 
-if($passed){
+//evaluate the judgement
+if($judgement->isPassed()){
     echo "File passed validation";
 }else{
     echo "File didn't pass validation";
@@ -34,10 +38,12 @@ You can not only validate files against generally attributes like file size and 
 
 use Creios\FileJudge\ImageJudge;
 
-$passed = (new ImageJudge("./image.png"))
+$judgement = (new ImageJudge())
+    //establish your laws
     ->setAssertedMaxHeight(101)
     ->setAssertedMinHeight(99)
-    ->judge();
+    //judge on basis of your laws
+    ->judge("./image.png");
 ```
 
 ## Constraints
