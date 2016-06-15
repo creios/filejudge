@@ -1,6 +1,8 @@
 <?php
 namespace Creios\FileJudge;
 
+use Creios\FileJudge\Judgement\FileJudgementBuilder;
+
 /**
  * Class FileJudge
  * @package Creios\FileJudge
@@ -54,15 +56,42 @@ class FileJudge
     }
 
     /**
-     * @return bool
+     * @return Judgement\FileJudgement
      */
     public function judge()
     {
-        if ($this->assertedMaxFileSize != null && !$this->judgeMaxFileSize()) return false;
-        if ($this->assertedMinFileSize != null && !$this->judgeMinFileSize()) return false;
-        if (count($this->assertedMediaTypes) > 0 && !$this->judgeMediaType()) return false;
-        if (count($this->assertedMediaTypeSubtypes) > 0 && !$this->judgeMediaTypeSubtype()) return false;
-        return true;
+        $fileJudgementBuilder = (new FileJudgementBuilder())->passed();
+        $fileJudgementBuilder = $this->actualJudge($fileJudgementBuilder);
+        return $fileJudgementBuilder->build();
+    }
+
+    /**
+     * @param FileJudgementBuilder $fileJudgementBuilder
+     * @return FileJudgementBuilder
+     */
+    protected function actualJudge(FileJudgementBuilder $fileJudgementBuilder)
+    {
+        if ($this->assertedMaxFileSize != null) {
+            if ($this->judgeMaxFileSize() == false) $fileJudgementBuilder->maxFileSizeFailed()->failed();
+            $fileJudgementBuilder->setAssertedMaxFileSize($this->assertedMaxFileSize);
+            $fileJudgementBuilder->setActualFileSize($this->actualFileSize);
+        }
+        if ($this->assertedMinFileSize != null) {
+            if ($this->judgeMinFileSize() == false) $fileJudgementBuilder->minFileSizeFailed()->failed();
+            $fileJudgementBuilder->setAssertedMinFileSize($this->assertedMinFileSize);
+            $fileJudgementBuilder->setActualFileSize($this->actualFileSize);
+        }
+        if (count($this->assertedMediaTypes) > 0) {
+            if ($this->judgeMediaType() == false) $fileJudgementBuilder->mediaTypeFailed()->failed();
+            $fileJudgementBuilder->setAssertedMediaTypes($this->assertedMediaTypes);
+            $fileJudgementBuilder->setActualMediaType($this->actualMediaType);
+        }
+        if (count($this->assertedMediaTypeSubtypes) > 0) {
+            if ($this->judgeMediaTypeSubtype() == false) $fileJudgementBuilder->mediaTypeSubtypeFailed()->failed();
+            $fileJudgementBuilder->setAssertedMediaTypeSubtypes($this->assertedMediaTypeSubtypes);
+            $fileJudgementBuilder->setActualMediaTypeSubtype($this->actualMediaTypeSubtype);
+        }
+        return $fileJudgementBuilder;
     }
 
     /**
@@ -151,30 +180,6 @@ class FileJudge
         $finfo = new \finfo(FILEINFO_MIME_TYPE);
         $this->actualMediaTypeSubtype = explode("/", $finfo->file($this->filepath))[1];
         return in_array($this->actualMediaTypeSubtype, $this->assertedMediaTypeSubtypes);
-    }
-
-    /**
-     * @return string
-     */
-    public function getActualMediaType()
-    {
-        return $this->actualMediaType;
-    }
-
-    /**
-     * @return string
-     */
-    public function getActualMediaTypeSubtype()
-    {
-        return $this->actualMediaTypeSubtype;
-    }
-
-    /**
-     * @return int
-     */
-    public function getActualFileSize()
-    {
-        return $this->actualFileSize;
     }
 
     /**

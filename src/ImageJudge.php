@@ -2,6 +2,8 @@
 
 namespace Creios\FileJudge;
 
+use Creios\FileJudge\Judgement\ImageJudgementBuilder;
+
 /**
  * Class ImageJudge
  * @package Creios\FileJudge
@@ -34,13 +36,45 @@ class ImageJudge extends FileJudge
      */
     protected $assertedMaxHeight;
 
+    /**
+     * @return Judgement\ImageJudgement
+     */
     public function judge()
     {
-        if ($this->assertedMaxHeight != null && !$this->judgeMaxHeight()) return false;
-        if ($this->assertedMinHeight != null && !$this->judgeMinHeight()) return false;
-        if ($this->assertedMaxWidth != null && !$this->judgeMaxWidth()) return false;
-        if ($this->assertedMinWidth != null && !$this->judgeMinWidth()) return false;
-        return parent::judge();
+        $imageJudgementBuilder = (new ImageJudgementBuilder())->passed();
+        /** @var ImageJudgementBuilder $imageJudgementBuilder */
+        $imageJudgementBuilder = parent::actualJudge($imageJudgementBuilder);
+        $imageJudgementBuilder = $this->actualImageJudge($imageJudgementBuilder);
+        return $imageJudgementBuilder->build();
+    }
+
+    /**
+     * @param ImageJudgementBuilder $imageJudgementBuilder
+     * @return ImageJudgementBuilder
+     */
+    protected function actualImageJudge(ImageJudgementBuilder $imageJudgementBuilder)
+    {
+        if ($this->assertedMaxHeight != null) {
+            if ($this->judgeMaxHeight() == false) $imageJudgementBuilder->maxHeightFailed()->failed();
+            $imageJudgementBuilder->setAssertedMaxHeight($this->assertedMaxHeight);
+            $imageJudgementBuilder->setActualHeight($this->actualHeight);
+        }
+        if ($this->assertedMinHeight != null) {
+            if ($this->judgeMinHeight() == false) $imageJudgementBuilder->minHeightFailed()->failed();
+            $imageJudgementBuilder->setAssertedMinHeight($this->assertedMinHeight);
+            $imageJudgementBuilder->setActualHeight($this->actualHeight);
+        }
+        if ($this->assertedMaxWidth != null) {
+            if ($this->judgeMaxWidth() == false) $imageJudgementBuilder->maxWidthFailed()->failed();
+            $imageJudgementBuilder->setAssertedMaxWidth($this->assertedMaxWidth);
+            $imageJudgementBuilder->setActualWidth($this->actualWidth);
+        }
+        if ($this->assertedMinWidth != null) {
+            if ($this->judgeMinWidth() == false) $imageJudgementBuilder->minWidthFailed()->failed();
+            $imageJudgementBuilder->setAssertedMinWidth($this->assertedMinWidth);
+            $imageJudgementBuilder->setActualWidth($this->actualWidth);
+        }
+        return $imageJudgementBuilder;
     }
 
     /**
@@ -77,22 +111,6 @@ class ImageJudge extends FileJudge
     {
         $this->actualWidth = getimagesize($this->filepath)[0];
         return $this->greaterEquals($this->actualWidth, $this->assertedMinWidth);
-    }
-
-    /**
-     * @return int
-     */
-    public function getActualWidth()
-    {
-        return $this->actualWidth;
-    }
-
-    /**
-     * @return int
-     */
-    public function getActualHeight()
-    {
-        return $this->actualHeight;
     }
 
     /**
