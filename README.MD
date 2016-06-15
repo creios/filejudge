@@ -23,9 +23,9 @@ $judgement = (new FileJudge())
 
 //evaluate the judgement
 if($judgement->isPassed()){
-    echo "File passed validation";
+    echo "File passed validation.";
 }else{
-    echo "File didn't pass validation";
+    echo "File didn't pass validation.";
 }
 ```
 
@@ -54,6 +54,34 @@ With Filejudge you can judge on the basis of a series of constraints.
 * Minimum / maximum file size
 * Minimum / maximum height (images only)
 * Minimum / maximum width (images only)
+
+## Judgement
+
+The result of the judge method is a judgement. It represents the outcome of the validating based on the constraints.
+
+**isPassed() : boolean**
+
+**getActualMediaType() : string**
+
+**getActualMediaTypeSubtype() : string**
+
+**getActualFileSize() : int**
+
+**getAssertedMediaTypes() : string[]**
+
+**getAssertedMediaTypeSubtypes() : string[]**
+
+**getAssertedMaxFileSize() : int**
+
+**getAssertedMinFileSize() : int**
+
+**isMediaTypeFailed() : boolean**
+
+**isMediaTypeSubtypeFailed() : boolean**
+
+**isMaxFileSizeFailed() : boolean**
+
+**isMinFileSizeFailed() : boolean**
 
 ## Install
 
