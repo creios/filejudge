@@ -6,6 +6,11 @@
 
 **Filejudge** is a validation library for files and images
 
+* Media Type (MIME-Type) including Subtype
+* Minimum / maximum file size
+* Minimum / maximum height (images only)
+* Minimum / maximum width (images only)
+
 ```php
 <?php
 
