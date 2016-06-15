@@ -1,10 +1,10 @@
-# Filejudge - I am the law
+# FileJudge - I am the law
 
 [![Build Status](https://travis-ci.org/creios/filejudge.svg?branch=master)](https://travis-ci.org/creios/filejudge)
 [![Coverage Status](https://coveralls.io/repos/creios/filejudge/badge.svg?branch=master&service=github)](https://coveralls.io/github/creios/filejudge?branch=master)
 [![GitHub license](https://img.shields.io/github/license/creios/filejudge.svg)]()
 
-**Filejudge** is a validation library for files and images.
+**FileJudge** is a validation library for files and images.
 
 ```php
 <?php
