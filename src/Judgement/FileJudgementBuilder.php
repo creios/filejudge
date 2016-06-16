@@ -10,7 +10,7 @@ use Creios\FileJudge\Judgement\Traits\FileJudgementTrait;
  */
 class FileJudgementBuilder
 {
-    
+
     use FileJudgementTrait;
 
     /**
@@ -19,123 +19,123 @@ class FileJudgementBuilder
     public function build()
     {
         return new FileJudgement(
-            $this->actualMediaType,
-            $this->actualMediaTypeSubtype,
-            $this->actualFileSize,
-            $this->assertedMediaTypes,
-            $this->assertedMediaTypeSubtypes,
-            $this->assertedMaxFileSize,
-            $this->assertedMinFileSize,
-            $this->mediaTypeFailed,
-            $this->mediaTypeSubtypeFailed,
-            $this->maxFileSizeFailed,
-            $this->minFileSizeFailed,
+            $this->mediaType,
+            $this->mediaTypeSubtype,
+            $this->fileSize,
+            $this->mediaTypesConstraint,
+            $this->mediaTypeSubtypesConstraint,
+            $this->maxFileSizeConstraint,
+            $this->minFileSizeConstraint,
+            $this->mediaTypeConstraintFailed,
+            $this->mediaTypeSubtypeConstraintFailed,
+            $this->maxFileSizeConstraintFailed,
+            $this->minFileSizeConstraintFailed,
             $this->passed);
     }
 
     /**
-     * @param string $actualMediaType
+     * @param string $mediaType
      * @return $this
      */
-    public function setActualMediaType($actualMediaType)
+    public function setMediaType($mediaType)
     {
-        $this->actualMediaType = $actualMediaType;
+        $this->mediaType = $mediaType;
         return $this;
     }
 
     /**
-     * @param string $actualMediaTypeSubtype
+     * @param string $mediaTypeSubtype
      * @return $this
      */
-    public function setActualMediaTypeSubtype($actualMediaTypeSubtype)
+    public function setMediaTypeSubtype($mediaTypeSubtype)
     {
-        $this->actualMediaTypeSubtype = $actualMediaTypeSubtype;
+        $this->mediaTypeSubtype = $mediaTypeSubtype;
         return $this;
     }
 
     /**
-     * @param int $actualFileSize
+     * @param int $fileSize
      * @return $this
      */
-    public function setActualFileSize($actualFileSize)
+    public function setFileSize($fileSize)
     {
-        $this->actualFileSize = $actualFileSize;
+        $this->fileSize = $fileSize;
         return $this;
     }
 
     /**
-     * @param string[] $assertedMediaTypes
+     * @param string $mediaTypesConstraint
      * @return $this
      */
-    public function setAssertedMediaTypes($assertedMediaTypes)
+    public function setMediaTypesConstraint($mediaTypesConstraint)
     {
-        $this->assertedMediaTypes = $assertedMediaTypes;
+        $this->mediaTypesConstraint = $mediaTypesConstraint;
         return $this;
     }
 
     /**
-     * @param string[] $assertedMediaTypeSubtypes
+     * @param string $mediaTypeSubtypesConstraint
      * @return $this
      */
-    public function setAssertedMediaTypeSubtypes($assertedMediaTypeSubtypes)
+    public function setMediaTypeSubtypesConstraint($mediaTypeSubtypesConstraint)
     {
-        $this->assertedMediaTypeSubtypes = $assertedMediaTypeSubtypes;
+        $this->mediaTypeSubtypesConstraint = $mediaTypeSubtypesConstraint;
         return $this;
     }
 
     /**
-     * @param int $assertedMaxFileSize
+     * @param int $maxFileSizeConstraint
      * @return $this
      */
-    public function setAssertedMaxFileSize($assertedMaxFileSize)
+    public function setMaxFileSizeConstraint($maxFileSizeConstraint)
     {
-        $this->assertedMaxFileSize = $assertedMaxFileSize;
+        $this->maxFileSizeConstraint = $maxFileSizeConstraint;
         return $this;
     }
 
     /**
-     * @param int $assertedMinFileSize
+     * @param int $minFileSizeConstraint
      * @return $this
      */
-    public function setAssertedMinFileSize($assertedMinFileSize)
+    public function setMinFileSizeConstraint($minFileSizeConstraint)
     {
-        $this->assertedMinFileSize = $assertedMinFileSize;
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function mediaTypeFailed()
-    {
-        $this->mediaTypeFailed = true;
+        $this->minFileSizeConstraint = $minFileSizeConstraint;
         return $this;
     }
 
     /**
      * @return $this
      */
-    public function mediaTypeSubtypeFailed()
+    public function mediaTypeConstraintFailed()
     {
-        $this->mediaTypeSubtypeFailed = true;
+        $this->mediaTypeConstraintFailed = true;
         return $this;
     }
 
     /**
      * @return $this
      */
-    public function maxFileSizeFailed()
+    public function mediaTypeSubtypeConstraintFailed()
     {
-        $this->maxFileSizeFailed = true;
+        $this->mediaTypeSubtypeConstraintFailed = true;
         return $this;
     }
 
     /**
      * @return $this
      */
-    public function minFileSizeFailed()
+    public function maxFileSizeConstraintFailed()
     {
-        $this->minFileSizeFailed = true;
+        $this->maxFileSizeConstraintFailed = true;
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function minFileSizeConstraintFailed()
+    {
+        $this->minFileSizeConstraintFailed = true;
         return $this;
     }
 
@@ -156,4 +156,5 @@ class FileJudgementBuilder
         $this->passed = true;
         return $this;
     }
+    
 }

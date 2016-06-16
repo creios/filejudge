@@ -8,61 +8,61 @@ class TestFileJudge extends \PHPUnit_Framework_TestCase
     public function testMediaType()
     {
         $fileJudgement = (new FileJudge())
-            ->addAssertedMediaType("image")
-            ->addAssertedMediaTypeSubtype("png")
-            ->addAssertedMediaTypeSubtype("jpg")->judge(__DIR__ . "/../assets/image.png");
+            ->addMediaTypeConstraint("image")
+            ->addMediaTypeSubtypeConstraint("png")
+            ->addMediaTypeSubtypeConstraint("jpg")->judge(__DIR__ . "/../assets/image.png");
 
-        $this->assertTrue($fileJudgement->isPassed());
-        $this->assertFalse($fileJudgement->isMediaTypeFailed());
-        $this->assertFalse($fileJudgement->isMediaTypeSubtypeFailed());
-        $this->assertEquals(["image"], $fileJudgement->getAssertedMediaTypes());
-        $this->assertEquals(["png", "jpg"], $fileJudgement->getAssertedMediaTypeSubtypes());
-        $this->assertEquals("image", $fileJudgement->getActualMediaType());
-        $this->assertEquals("png", $fileJudgement->getActualMediaTypeSubtype());
+        $this->assertTrue($fileJudgement->hasPassed());
+        $this->assertFalse($fileJudgement->hasMediaTypeConstraintFailed());
+        $this->assertFalse($fileJudgement->hasMediaTypeSubtypeConstraintFailed());
+        $this->assertEquals(["image"], $fileJudgement->getMediaTypesConstraint());
+        $this->assertEquals(["png", "jpg"], $fileJudgement->getMediaTypeSubtypesConstraint());
+        $this->assertEquals("image", $fileJudgement->getMediaType());
+        $this->assertEquals("png", $fileJudgement->getMediaTypeSubtype());
     }
 
     public function testMediaTypeFailed()
     {
         $fileJudgement = (new FileJudge())
-            ->addAssertedMediaType("text")
-            ->addAssertedMediaTypeSubtype("html")
-            ->addAssertedMediaTypeSubtype("xml")->judge(__DIR__ . "/../assets/image.png");
+            ->addMediaTypeConstraint("text")
+            ->addMediaTypeSubtypeConstraint("html")
+            ->addMediaTypeSubtypeConstraint("xml")->judge(__DIR__ . "/../assets/image.png");
 
-        $this->assertFalse($fileJudgement->isPassed());
-        $this->assertTrue($fileJudgement->isMediaTypeFailed());
-        $this->assertTrue($fileJudgement->isMediaTypeSubtypeFailed());
-        $this->assertEquals(["text"], $fileJudgement->getAssertedMediaTypes());
-        $this->assertEquals(["html", "xml"], $fileJudgement->getAssertedMediaTypeSubtypes());
-        $this->assertEquals("image", $fileJudgement->getActualMediaType());
-        $this->assertEquals("png", $fileJudgement->getActualMediaTypeSubtype());
+        $this->assertFalse($fileJudgement->hasPassed());
+        $this->assertTrue($fileJudgement->hasMediaTypeConstraintFailed());
+        $this->assertTrue($fileJudgement->hasMediaTypeSubtypeConstraintFailed());
+        $this->assertEquals(["text"], $fileJudgement->getMediaTypesConstraint());
+        $this->assertEquals(["html", "xml"], $fileJudgement->getMediaTypeSubtypesConstraint());
+        $this->assertEquals("image", $fileJudgement->getMediaType());
+        $this->assertEquals("png", $fileJudgement->getMediaTypeSubtype());
     }
 
     public function testFileSize()
     {
         $fileJudgement = (new FileJudge())
-            ->setAssertedMaxFileSize(2479123)
-            ->setAssertedMinFileSize(1000)->judge(__DIR__ . "/../assets/image.png");
-        $this->assertTrue($fileJudgement->isPassed());
-        $this->assertFalse($fileJudgement->isMaxFileSizeFailed());
-        $this->assertFalse($fileJudgement->isMinFileSizeFailed());
-        $this->assertEquals(2479123, $fileJudgement->getAssertedMaxFileSize());
-        $this->assertEquals(1000, $fileJudgement->getAssertedMinFileSize());
-        $this->assertEquals(5447, $fileJudgement->getActualFileSize());
-        $this->assertEquals(5447, $fileJudgement->getActualFileSize());
+            ->setMaxFileSizeConstraint(2479123)
+            ->setMinFileSizeConstraint(1000)->judge(__DIR__ . "/../assets/image.png");
+        $this->assertTrue($fileJudgement->hasPassed());
+        $this->assertFalse($fileJudgement->hasMaxFileSizeConstraintFailed());
+        $this->assertFalse($fileJudgement->hasMinFileSizeConstraintFailed());
+        $this->assertEquals(2479123, $fileJudgement->getMaxFileSizeConstraint());
+        $this->assertEquals(1000, $fileJudgement->getMinFileSizeConstraint());
+        $this->assertEquals(5447, $fileJudgement->getFileSize());
+        $this->assertEquals(5447, $fileJudgement->getFileSize());
     }
 
     public function testFileSizeFailed()
     {
         $fileJudgement = (new FileJudge())
-            ->setAssertedMaxFileSize(5000)
-            ->setAssertedMinFileSize(6000)->judge(__DIR__ . "/../assets/image.png");
-        $this->assertFalse($fileJudgement->isPassed());
-        $this->assertTrue($fileJudgement->isMaxFileSizeFailed());
-        $this->assertTrue($fileJudgement->isMinFileSizeFailed());
-        $this->assertEquals(5000, $fileJudgement->getAssertedMaxFileSize());
-        $this->assertEquals(6000, $fileJudgement->getAssertedMinFileSize());
-        $this->assertEquals(5447, $fileJudgement->getActualFileSize());
-        $this->assertEquals(5447, $fileJudgement->getActualFileSize());
+            ->setMaxFileSizeConstraint(5000)
+            ->setMinFileSizeConstraint(6000)->judge(__DIR__ . "/../assets/image.png");
+        $this->assertFalse($fileJudgement->hasPassed());
+        $this->assertTrue($fileJudgement->hasMaxFileSizeConstraintFailed());
+        $this->assertTrue($fileJudgement->hasMinFileSizeConstraintFailed());
+        $this->assertEquals(5000, $fileJudgement->getMaxFileSizeConstraint());
+        $this->assertEquals(6000, $fileJudgement->getMinFileSizeConstraint());
+        $this->assertEquals(5447, $fileJudgement->getFileSize());
+        $this->assertEquals(5447, $fileJudgement->getFileSize());
     }
 
     public function testException()

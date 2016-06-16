@@ -4,6 +4,10 @@ namespace Creios\FileJudge\Judgement;
 
 use Creios\FileJudge\Judgement\Traits\ImageJudgementTrait;
 
+/**
+ * Class ImageJudgement
+ * @package Creios\FileJudge\Judgement
+ */
 class ImageJudgement extends FileJudgement
 {
 
@@ -11,123 +15,123 @@ class ImageJudgement extends FileJudgement
 
     /**
      * FileJudgement constructor.
-     * @param string $actualMediaType
-     * @param string $actualMediaTypeSubtype
-     * @param int $actualFileSize
-     * @param string[] $assertedMediaTypes
-     * @param string[] $assertedMediaTypeSubtypes
-     * @param int $assertedMaxFileSize
-     * @param int $assertedMinFileSize
-     * @param bool $mediaTypeFailed
-     * @param bool $mediaTypeSubtypeFailed
-     * @param bool $maxFileSizeFailed
-     * @param bool $minFileSizeFailed
-     * @param $actualWidth
-     * @param $actualHeight
-     * @param $assertedMinWidth
-     * @param $assertedMaxWidth
-     * @param $assertedMinHeight
-     * @param $assertedMaxHeight
-     * @param $minWidthFailed
-     * @param $maxWidthFailed
-     * @param $minHeightFailed
-     * @param $maxHeightFailed
+     * @param string $mediaType
+     * @param string $mediaTypeSubtype
+     * @param int $fileSize
+     * @param string[] $mediaTypes
+     * @param string[] $mediaTypeSubtypes
+     * @param int $maxFileSize
+     * @param int $minFileSize
+     * @param bool $mediaTypeConstraintFailed
+     * @param bool $mediaTypeSubtypeConstraintFailed
+     * @param bool $maxFileSizeConstraintFailed
+     * @param bool $minFileSizeConstraintFailed
+     * @param $width
+     * @param $height
+     * @param $minWidthConstraint
+     * @param $maxWidthConstraint
+     * @param $minHeightConstraint
+     * @param $maxHeightConstraint
+     * @param $minWidthConstraintFailed
+     * @param $maxWidthConstraintFailed
+     * @param $minHeightConstraintFailed
+     * @param $maxHeightConstraintFailed
      * @param bool $passed
      */
-    public function __construct($actualMediaType, $actualMediaTypeSubtype, $actualFileSize, array $assertedMediaTypes, array $assertedMediaTypeSubtypes, $assertedMaxFileSize, $assertedMinFileSize, $mediaTypeFailed, $mediaTypeSubtypeFailed, $maxFileSizeFailed, $minFileSizeFailed, $actualWidth, $actualHeight, $assertedMinWidth, $assertedMaxWidth, $assertedMinHeight, $assertedMaxHeight, $minWidthFailed, $maxWidthFailed, $minHeightFailed, $maxHeightFailed, $passed)
+    public function __construct($mediaType, $mediaTypeSubtype, $fileSize, array $mediaTypes, array $mediaTypeSubtypes, $maxFileSize, $minFileSize, $mediaTypeConstraintFailed, $mediaTypeSubtypeConstraintFailed, $maxFileSizeConstraintFailed, $minFileSizeConstraintFailed, $width, $height, $minWidthConstraint, $maxWidthConstraint, $minHeightConstraint, $maxHeightConstraint, $minWidthConstraintFailed, $maxWidthConstraintFailed, $minHeightConstraintFailed, $maxHeightConstraintFailed, $passed)
     {
-        parent::__construct($actualMediaType, $actualMediaTypeSubtype, $actualFileSize, $assertedMediaTypes, $assertedMediaTypeSubtypes, $assertedMaxFileSize, $assertedMinFileSize, $mediaTypeFailed, $mediaTypeSubtypeFailed, $maxFileSizeFailed, $minFileSizeFailed, $passed);
-        $this->actualWidth = $actualWidth;
-        $this->actualHeight = $actualHeight;
-        $this->assertedMinWidth = $assertedMinWidth;
-        $this->assertedMaxWidth = $assertedMaxWidth;
-        $this->assertedMinHeight = $assertedMinHeight;
-        $this->assertedMaxHeight = $assertedMaxHeight;
-        $this->minWidthFailed = $minWidthFailed;
-        $this->maxWidthFailed = $maxWidthFailed;
-        $this->minHeightFailed = $minHeightFailed;
-        $this->maxHeightFailed = $maxHeightFailed;
+        parent::__construct($mediaType, $mediaTypeSubtype, $fileSize, $mediaTypes, $mediaTypeSubtypes, $maxFileSize, $minFileSize, $mediaTypeConstraintFailed, $mediaTypeSubtypeConstraintFailed, $maxFileSizeConstraintFailed, $minFileSizeConstraintFailed, $passed);
+        $this->width = $width;
+        $this->height = $height;
+        $this->minWidthConstraint = $minWidthConstraint;
+        $this->maxWidthConstraint = $maxWidthConstraint;
+        $this->minHeightConstraint = $minHeightConstraint;
+        $this->maxHeightConstraint = $maxHeightConstraint;
+        $this->minWidthConstraintFailed = $minWidthConstraintFailed;
+        $this->maxWidthConstraintFailed = $maxWidthConstraintFailed;
+        $this->minHeightConstraintFailed = $minHeightConstraintFailed;
+        $this->maxHeightConstraintFailed = $maxHeightConstraintFailed;
         $this->passed = $passed;
     }
 
     /**
      * @return int
      */
-    public function getActualWidth()
+    public function getWidth()
     {
-        return $this->actualWidth;
+        return $this->width;
     }
 
     /**
      * @return int
      */
-    public function getActualHeight()
+    public function getHeight()
     {
-        return $this->actualHeight;
+        return $this->height;
     }
 
     /**
      * @return int
      */
-    public function getAssertedMinWidth()
+    public function getMinWidthConstraint()
     {
-        return $this->assertedMinWidth;
+        return $this->minWidthConstraint;
     }
 
     /**
      * @return int
      */
-    public function getAssertedMaxWidth()
+    public function getMaxWidthConstraint()
     {
-        return $this->assertedMaxWidth;
+        return $this->maxWidthConstraint;
     }
 
     /**
      * @return int
      */
-    public function getAssertedMinHeight()
+    public function getMinHeightConstraint()
     {
-        return $this->assertedMinHeight;
+        return $this->minHeightConstraint;
     }
 
     /**
      * @return int
      */
-    public function getAssertedMaxHeight()
+    public function getMaxHeightConstraint()
     {
-        return $this->assertedMaxHeight;
+        return $this->maxHeightConstraint;
     }
 
     /**
      * @return boolean
      */
-    public function isMinWidthFailed()
+    public function hasMinWidthConstraintFailed()
     {
-        return $this->minWidthFailed;
+        return $this->minWidthConstraintFailed;
     }
 
     /**
      * @return boolean
      */
-    public function isMaxWidthFailed()
+    public function hasMaxWidthConstraintFailed()
     {
-        return $this->maxWidthFailed;
+        return $this->maxWidthConstraintFailed;
     }
 
     /**
      * @return boolean
      */
-    public function isMinHeightFailed()
+    public function hasMinHeightConstraintFailed()
     {
-        return $this->minHeightFailed;
+        return $this->minHeightConstraintFailed;
     }
 
     /**
      * @return boolean
      */
-    public function isMaxHeightFailed()
+    public function hasMaxHeightConstraintFailed()
     {
-        return $this->maxHeightFailed;
+        return $this->maxHeightConstraintFailed;
     }
 
 }

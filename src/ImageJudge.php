@@ -22,19 +22,19 @@ class ImageJudge extends FileJudge
     /**
      * @var int
      */
-    protected $assertedMinWidth;
+    protected $minWidthConstraint;
     /**
      * @var int
      */
-    protected $assertedMaxWidth;
+    protected $maxWidthConstraint;
     /**
      * @var int
      */
-    protected $assertedMinHeight;
+    protected $minHeightConstraint;
     /**
      * @var int
      */
-    protected $assertedMaxHeight;
+    protected $maxHeightConstraint;
 
     /**
      * @param $filepath
@@ -57,25 +57,25 @@ class ImageJudge extends FileJudge
      */
     protected function actualImageJudge(ImageJudgementBuilder $imageJudgementBuilder)
     {
-        if ($this->assertedMaxHeight != null) {
+        if ($this->maxHeightConstraint != null) {
             if ($this->judgeMaxHeight() == false) $imageJudgementBuilder->maxHeightFailed()->failed();
-            $imageJudgementBuilder->setAssertedMaxHeight($this->assertedMaxHeight);
-            $imageJudgementBuilder->setActualHeight($this->actualHeight);
+            $imageJudgementBuilder->setMaxHeightConstraint($this->maxHeightConstraint);
+            $imageJudgementBuilder->setHeight($this->actualHeight);
         }
-        if ($this->assertedMinHeight != null) {
+        if ($this->minHeightConstraint != null) {
             if ($this->judgeMinHeight() == false) $imageJudgementBuilder->minHeightFailed()->failed();
-            $imageJudgementBuilder->setAssertedMinHeight($this->assertedMinHeight);
-            $imageJudgementBuilder->setActualHeight($this->actualHeight);
+            $imageJudgementBuilder->setMinHeightConstraint($this->minHeightConstraint);
+            $imageJudgementBuilder->setHeight($this->actualHeight);
         }
-        if ($this->assertedMaxWidth != null) {
+        if ($this->maxWidthConstraint != null) {
             if ($this->judgeMaxWidth() == false) $imageJudgementBuilder->maxWidthFailed()->failed();
-            $imageJudgementBuilder->setAssertedMaxWidth($this->assertedMaxWidth);
-            $imageJudgementBuilder->setActualWidth($this->actualWidth);
+            $imageJudgementBuilder->setMaxWidthConstraint($this->maxWidthConstraint);
+            $imageJudgementBuilder->setWidth($this->actualWidth);
         }
-        if ($this->assertedMinWidth != null) {
+        if ($this->minWidthConstraint != null) {
             if ($this->judgeMinWidth() == false) $imageJudgementBuilder->minWidthFailed()->failed();
-            $imageJudgementBuilder->setAssertedMinWidth($this->assertedMinWidth);
-            $imageJudgementBuilder->setActualWidth($this->actualWidth);
+            $imageJudgementBuilder->setMinWidthConstraint($this->minWidthConstraint);
+            $imageJudgementBuilder->setWidth($this->actualWidth);
         }
         return $imageJudgementBuilder;
     }
@@ -86,7 +86,7 @@ class ImageJudge extends FileJudge
     protected function judgeMaxHeight()
     {
         $this->actualHeight = getimagesize($this->filepath)[1];
-        return $this->lesserEquals($this->actualHeight, $this->assertedMaxHeight);
+        return $this->lesserEquals($this->actualHeight, $this->maxHeightConstraint);
     }
 
     /**
@@ -95,7 +95,7 @@ class ImageJudge extends FileJudge
     protected function judgeMinHeight()
     {
         $this->actualHeight = getimagesize($this->filepath)[1];
-        return $this->greaterEquals($this->actualHeight, $this->assertedMinHeight);
+        return $this->greaterEquals($this->actualHeight, $this->minHeightConstraint);
     }
 
     /**
@@ -104,7 +104,7 @@ class ImageJudge extends FileJudge
     protected function judgeMaxWidth()
     {
         $this->actualWidth = getimagesize($this->filepath)[0];
-        return $this->lesserEquals($this->actualWidth, $this->assertedMaxWidth);
+        return $this->lesserEquals($this->actualWidth, $this->maxWidthConstraint);
     }
 
     /**
@@ -113,46 +113,46 @@ class ImageJudge extends FileJudge
     protected function judgeMinWidth()
     {
         $this->actualWidth = getimagesize($this->filepath)[0];
-        return $this->greaterEquals($this->actualWidth, $this->assertedMinWidth);
+        return $this->greaterEquals($this->actualWidth, $this->minWidthConstraint);
     }
 
     /**
-     * @param int $assertedMinWidth
+     * @param int $minWidth
      * @return $this
      */
-    public function setAssertedMinWidth($assertedMinWidth)
+    public function setMinWidthConstraint($minWidth)
     {
-        $this->assertedMinWidth = $assertedMinWidth;
+        $this->minWidthConstraint = $minWidth;
         return $this;
     }
 
     /**
-     * @param int $assertedMaxWidth
+     * @param int $maxWidth
      * @return $this
      */
-    public function setAssertedMaxWidth($assertedMaxWidth)
+    public function setMaxWidthConstraint($maxWidth)
     {
-        $this->assertedMaxWidth = $assertedMaxWidth;
+        $this->maxWidthConstraint = $maxWidth;
         return $this;
     }
 
     /**
-     * @param int $assertedMinHeight
+     * @param int $minHeight
      * @return $this
      */
-    public function setAssertedMinHeight($assertedMinHeight)
+    public function setMinHeightConstraint($minHeight)
     {
-        $this->assertedMinHeight = $assertedMinHeight;
+        $this->minHeightConstraint = $minHeight;
         return $this;
     }
 
     /**
-     * @param int $assertedMaxHeight
+     * @param int $maxHeight
      * @return $this
      */
-    public function setAssertedMaxHeight($assertedMaxHeight)
+    public function setMaxHeightConstraint($maxHeight)
     {
-        $this->assertedMaxHeight = $assertedMaxHeight;
+        $this->maxHeightConstraint = $maxHeight;
         return $this;
     }
 

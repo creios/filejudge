@@ -12,57 +12,57 @@ trait FileJudgementTrait
     /**
      * @var string
      */
-    protected $actualMediaType;
+    protected $mediaType;
 
     /**
      * @var string
      */
-    protected $actualMediaTypeSubtype;
+    protected $mediaTypeSubtype;
 
     /**
      * @var int
      */
-    protected $actualFileSize;
+    protected $fileSize;
 
     /**
      * @var string[]
      */
-    protected $assertedMediaTypes = array();
+    protected $mediaTypesConstraint = array();
 
     /**
      * @var string[]
      */
-    protected $assertedMediaTypeSubtypes = array();
+    protected $mediaTypeSubtypesConstraint = array();
 
     /**
      * @var int
      */
-    protected $assertedMaxFileSize;
+    protected $maxFileSizeConstraint;
 
     /**
      * @var int
      */
-    protected $assertedMinFileSize;
+    protected $minFileSizeConstraint;
 
     /**
      * @var bool
      */
-    protected $mediaTypeFailed = false;
+    protected $mediaTypeConstraintFailed = false;
 
     /**
      * @var bool
      */
-    protected $mediaTypeSubtypeFailed = false;
+    protected $mediaTypeSubtypeConstraintFailed = false;
 
     /**
      * @var bool
      */
-    protected $maxFileSizeFailed = false;
+    protected $maxFileSizeConstraintFailed = false;
 
     /**
      * @var bool
      */
-    protected $minFileSizeFailed = false;
+    protected $minFileSizeConstraintFailed = false;
 
     /**
      * @var bool
@@ -72,95 +72,95 @@ trait FileJudgementTrait
     /**
      * @return string
      */
-    public function getActualMediaType()
+    public function getMediaType()
     {
-        return $this->actualMediaType;
+        return $this->mediaType;
     }
 
     /**
      * @return string
      */
-    public function getActualMediaTypeSubtype()
+    public function getMediaTypeSubtype()
     {
-        return $this->actualMediaTypeSubtype;
+        return $this->mediaTypeSubtype;
     }
 
     /**
      * @return int
      */
-    public function getActualFileSize()
+    public function getFileSize()
     {
-        return $this->actualFileSize;
+        return $this->fileSize;
     }
 
     /**
      * @return \string[]
      */
-    public function getAssertedMediaTypes()
+    public function getMediaTypesConstraint()
     {
-        return $this->assertedMediaTypes;
+        return $this->mediaTypesConstraint;
     }
 
     /**
      * @return \string[]
      */
-    public function getAssertedMediaTypeSubtypes()
+    public function getMediaTypeSubtypesConstraint()
     {
-        return $this->assertedMediaTypeSubtypes;
+        return $this->mediaTypeSubtypesConstraint;
     }
 
     /**
      * @return int
      */
-    public function getAssertedMaxFileSize()
+    public function getMaxFileSizeConstraint()
     {
-        return $this->assertedMaxFileSize;
+        return $this->maxFileSizeConstraint;
     }
 
     /**
      * @return int
      */
-    public function getAssertedMinFileSize()
+    public function getMinFileSizeConstraint()
     {
-        return $this->assertedMinFileSize;
+        return $this->minFileSizeConstraint;
     }
 
     /**
      * @return boolean
      */
-    public function isMediaTypeFailed()
+    public function hasMediaTypeConstraintFailed()
     {
-        return $this->mediaTypeFailed;
+        return $this->mediaTypeConstraintFailed;
     }
 
     /**
      * @return boolean
      */
-    public function isMediaTypeSubtypeFailed()
+    public function hasMediaTypeSubtypeConstraintFailed()
     {
-        return $this->mediaTypeSubtypeFailed;
+        return $this->mediaTypeSubtypeConstraintFailed;
     }
 
     /**
      * @return boolean
      */
-    public function isMaxFileSizeFailed()
+    public function hasMaxFileSizeConstraintFailed()
     {
-        return $this->maxFileSizeFailed;
+        return $this->maxFileSizeConstraintFailed;
     }
 
     /**
      * @return boolean
      */
-    public function isMinFileSizeFailed()
+    public function hasMinFileSizeConstraintFailed()
     {
-        return $this->minFileSizeFailed;
+        return $this->minFileSizeConstraintFailed;
     }
 
     /**
      * @return boolean
      */
-    public function isPassed()
+    public function hasPassed()
     {
         return $this->passed;
     }

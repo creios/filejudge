@@ -4,6 +4,10 @@ namespace Creios\FileJudge\Judgement;
 
 use Creios\FileJudge\Judgement\Traits\ImageJudgementTrait;
 
+/**
+ * Class ImageJudgementBuilder
+ * @package Creios\FileJudge\Judgement
+ */
 class ImageJudgementBuilder extends FileJudgementBuilder
 {
 
@@ -15,87 +19,87 @@ class ImageJudgementBuilder extends FileJudgementBuilder
     public function build()
     {
         return new ImageJudgement(
-            $this->actualMediaType,
-            $this->actualMediaTypeSubtype,
-            $this->actualFileSize,
-            $this->assertedMediaTypes,
-            $this->assertedMediaTypeSubtypes,
-            $this->assertedMaxFileSize,
-            $this->assertedMinFileSize,
-            $this->mediaTypeFailed,
-            $this->mediaTypeSubtypeFailed,
-            $this->maxFileSizeFailed,
-            $this->minFileSizeFailed,
-            $this->actualWidth,
-            $this->actualHeight,
-            $this->assertedMinWidth,
-            $this->assertedMaxWidth,
-            $this->assertedMinHeight,
-            $this->assertedMaxHeight,
-            $this->minWidthFailed,
-            $this->maxWidthFailed,
-            $this->minHeightFailed,
-            $this->maxHeightFailed,
+            $this->mediaType,
+            $this->mediaTypeSubtype,
+            $this->fileSize,
+            $this->mediaTypesConstraint,
+            $this->mediaTypeSubtypesConstraint,
+            $this->maxFileSizeConstraint,
+            $this->minFileSizeConstraint,
+            $this->mediaTypeConstraintFailed,
+            $this->mediaTypeSubtypeConstraintFailed,
+            $this->maxFileSizeConstraintFailed,
+            $this->minFileSizeConstraintFailed,
+            $this->width,
+            $this->height,
+            $this->minWidthConstraint,
+            $this->maxWidthConstraint,
+            $this->minHeightConstraint,
+            $this->maxHeightConstraint,
+            $this->minWidthConstraintFailed,
+            $this->maxWidthConstraintFailed,
+            $this->minHeightConstraintFailed,
+            $this->maxHeightConstraintFailed,
             $this->passed);
     }
 
     /**
-     * @param $actualWidth
+     * @param $width
      * @return $this
      */
-    public function setActualWidth($actualWidth)
+    public function setWidth($width)
     {
-        $this->actualWidth = $actualWidth;
+        $this->width = $width;
         return $this;
     }
 
     /**
-     * @param $actualHeight
+     * @param $height
      * @return $this
      */
-    public function setActualHeight($actualHeight)
+    public function setHeight($height)
     {
-        $this->actualHeight = $actualHeight;
+        $this->height = $height;
         return $this;
     }
 
     /**
-     * @param $assertedMinWidth
+     * @param int $minWidthConstraint
      * @return $this
      */
-    public function setAssertedMinWidth($assertedMinWidth)
+    public function setMinWidthConstraint($minWidthConstraint)
     {
-        $this->assertedMinWidth = $assertedMinWidth;
+        $this->minWidthConstraint = $minWidthConstraint;
         return $this;
     }
 
     /**
-     * @param $assertedMaxWidth
+     * @param int $maxWidthConstraint
      * @return $this
      */
-    public function setAssertedMaxWidth($assertedMaxWidth)
+    public function setMaxWidthConstraint($maxWidthConstraint)
     {
-        $this->assertedMaxWidth = $assertedMaxWidth;
+        $this->maxWidthConstraint = $maxWidthConstraint;
         return $this;
     }
 
     /**
-     * @param $assertedMinHeight
+     * @param int $minHeightConstraint
      * @return $this
      */
-    public function setAssertedMinHeight($assertedMinHeight)
+    public function setMinHeightConstraint($minHeightConstraint)
     {
-        $this->assertedMinHeight = $assertedMinHeight;
+        $this->minHeightConstraint = $minHeightConstraint;
         return $this;
     }
 
     /**
-     * @param $assertedMaxHeight
+     * @param int $maxHeightConstraint
      * @return $this
      */
-    public function setAssertedMaxHeight($assertedMaxHeight)
+    public function setMaxHeightConstraint($maxHeightConstraint)
     {
-        $this->assertedMaxHeight = $assertedMaxHeight;
+        $this->maxHeightConstraint = $maxHeightConstraint;
         return $this;
     }
 
@@ -104,7 +108,7 @@ class ImageJudgementBuilder extends FileJudgementBuilder
      */
     public function minWidthFailed()
     {
-        $this->minWidthFailed = true;
+        $this->minWidthConstraintFailed = true;
         return $this;
     }
 
@@ -113,7 +117,7 @@ class ImageJudgementBuilder extends FileJudgementBuilder
      */
     public function maxWidthFailed()
     {
-        $this->maxWidthFailed = true;
+        $this->maxWidthConstraintFailed = true;
         return $this;
     }
 
@@ -122,7 +126,7 @@ class ImageJudgementBuilder extends FileJudgementBuilder
      */
     public function minHeightFailed()
     {
-        $this->minHeightFailed = true;
+        $this->minHeightConstraintFailed = true;
         return $this;
     }
 
@@ -131,7 +135,7 @@ class ImageJudgementBuilder extends FileJudgementBuilder
      */
     public function maxHeightFailed()
     {
-        $this->maxHeightFailed = true;
+        $this->maxHeightConstraintFailed = true;
         return $this;
     }
 

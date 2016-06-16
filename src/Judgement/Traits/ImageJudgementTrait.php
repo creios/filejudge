@@ -12,51 +12,51 @@ trait ImageJudgementTrait
     /**
      * @var int
      */
-    protected $actualWidth;
+    protected $width;
 
     /**
      * @var int
      */
-    protected $actualHeight;
+    protected $height;
 
     /**
      * @var int
      */
-    protected $assertedMinWidth;
+    protected $minWidthConstraint;
 
     /**
      * @var int
      */
-    protected $assertedMaxWidth;
+    protected $maxWidthConstraint;
 
     /**
      * @var int
      */
-    protected $assertedMinHeight;
+    protected $minHeightConstraint;
 
     /**
      * @var int
      */
-    protected $assertedMaxHeight;
+    protected $maxHeightConstraint;
 
     /**
      * @var bool
      */
-    protected $minWidthFailed=false;
+    protected $minWidthConstraintFailed = false;
 
     /**
      * @var bool
      */
-    protected $maxWidthFailed=false;
+    protected $maxWidthConstraintFailed = false;
 
     /**
      * @var bool
      */
-    protected $minHeightFailed=false;
+    protected $minHeightConstraintFailed = false;
 
     /**
      * @var bool
      */
-    protected $maxHeightFailed=false;
+    protected $maxHeightConstraintFailed = false;
 
 }

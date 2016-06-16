@@ -13,16 +13,16 @@ use Creios\FileJudge\FileJudge;
 
 $judgement = (new FileJudge())
     //establish your constraints
-    ->addAssertedMediaType("text")
-    ->addAssertedMediaTypeSubtype("html")
-    ->addAssertedMediaTypeSubtype("xml")
-    ->setAssertedMaxFileSize(1337)
-    ->setAssertedMinFileSize(42)
+    ->addMediaTypeConstraint("text")
+    ->addMediaTypeSubtypeConstraint("html")
+    ->addMediaTypeSubtypeConstraint("xml")
+    ->setMaxFileSizeConstraint(1337)
+    ->setMinFileSizeConstraint(42)
     //judge on basis of your constraints
     ->judge("./template.html");
 
 //evaluate the judgement
-if($judgement->isPassed()){
+if($judgement->hasPassed()){
     echo "File passed validation.";
 }else{
     echo "File didn't pass validation.";
@@ -40,8 +40,8 @@ use Creios\FileJudge\ImageJudge;
 
 $judgement = (new ImageJudge())
     //establish your constraints
-    ->setAssertedMaxHeight(101)
-    ->setAssertedMinHeight(99)
+    ->setMaxHeightConstraint(101)
+    ->setMinHeightConstraint(99)
     //judge on basis of your constraints
     ->judge("./image.png");
 ```
@@ -59,29 +59,29 @@ With Filejudge you can judge on the basis of a series of constraints.
 
 The result of the judge method is a judgement. It represents the outcome of the validating based on the constraints.
 
-**isPassed() : boolean**
+**hasPassed() : boolean**
 
-**getActualMediaType() : string**
+**getMediaType() : string**
 
-**getActualMediaTypeSubtype() : string**
+**getMediaTypeSubtype() : string**
 
-**getActualFileSize() : int**
+**getFileSize() : int**
 
-**getAssertedMediaTypes() : string[]**
+**getMediaTypesConstraint() : string[]**
 
-**getAssertedMediaTypeSubtypes() : string[]**
+**getMediaTypeSubtypesConstraint() : string[]**
 
-**getAssertedMaxFileSize() : int**
+**getMaxFileSizeConstraint() : int**
 
-**getAssertedMinFileSize() : int**
+**getMinFileSizeConstraint() : int**
 
-**isMediaTypeFailed() : boolean**
+**hasMediaTypeFailed() : boolean**
 
-**isMediaTypeSubtypeFailed() : boolean**
+**hasMediaTypeSubtypeFailed() : boolean**
 
-**isMaxFileSizeFailed() : boolean**
+**hasMaxFileSizeFailed() : boolean**
 
-**isMinFileSizeFailed() : boolean**
+**hasMinFileSizeFailed() : boolean**
 
 ## Install
 
@@ -103,4 +103,3 @@ or
 ```sh
 composer require creios/filejudge
 ```
-
