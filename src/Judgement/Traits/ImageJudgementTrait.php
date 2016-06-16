@@ -42,21 +42,21 @@ trait ImageJudgementTrait
     /**
      * @var bool
      */
-    protected $minWidthFailed;
+    protected $minWidthFailed=false;
 
     /**
      * @var bool
      */
-    protected $maxWidthFailed;
+    protected $maxWidthFailed=false;
 
     /**
      * @var bool
      */
-    protected $minHeightFailed;
+    protected $minHeightFailed=false;
 
     /**
      * @var bool
      */
-    protected $maxHeightFailed;
+    protected $maxHeightFailed=false;
 
 }
