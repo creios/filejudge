@@ -46,7 +46,7 @@ class ImageJudge extends FileJudge
         $this->setFilepath($filepath);
         $imageJudgementBuilder = (new ImageJudgementBuilder())->passed();
         /** @var ImageJudgementBuilder $imageJudgementBuilder */
-        $imageJudgementBuilder = parent::actualJudge($imageJudgementBuilder);
+        $imageJudgementBuilder = $this->actualFileJudge($imageJudgementBuilder);
         $imageJudgementBuilder = $this->actualImageJudge($imageJudgementBuilder);
         return $imageJudgementBuilder->build();
     }

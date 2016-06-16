@@ -52,7 +52,7 @@ class FileJudge
     {
         $this->setFilepath($filepath);
         $fileJudgementBuilder = (new FileJudgementBuilder())->passed();
-        $fileJudgementBuilder = $this->actualJudge($fileJudgementBuilder);
+        $fileJudgementBuilder = $this->actualFileJudge($fileJudgementBuilder);
         return $fileJudgementBuilder->build();
     }
 
@@ -60,7 +60,7 @@ class FileJudge
      * @param FileJudgementBuilder $fileJudgementBuilder
      * @return FileJudgementBuilder
      */
-    protected function actualJudge(FileJudgementBuilder $fileJudgementBuilder)
+    protected function actualFileJudge(FileJudgementBuilder $fileJudgementBuilder)
     {
         if ($this->assertedMaxFileSize != null) {
             if ($this->judgeMaxFileSize() == false) $fileJudgementBuilder->maxFileSizeFailed()->failed();
