@@ -1,7 +1,7 @@
 # FileJudge - I am the law
 
 [![Build Status](https://travis-ci.org/creios/filejudge.svg?branch=master)](https://travis-ci.org/creios/filejudge)
-[![Coverage Status](https://coveralls.io/repos/github/creios/filejudge/badge.svg?branch=develop)](https://coveralls.io/github/creios/filejudge?branch=develop)
+[![Coverage Status](https://coveralls.io/repos/github/creios/filejudge/badge.svg?branch=master)](https://coveralls.io/github/creios/filejudge?branch=master)
 [![GitHub license](https://img.shields.io/github/license/creios/filejudge.svg)]()
 
 **FileJudge** is a validation library for files and images.
