@@ -64,7 +64,7 @@ class FileJudgementBuilder
     }
 
     /**
-     * @param string $mediaTypesConstraint
+     * @param string[] $mediaTypesConstraint
      * @return $this
      */
     public function setMediaTypesConstraint($mediaTypesConstraint)
@@ -74,7 +74,7 @@ class FileJudgementBuilder
     }
 
     /**
-     * @param string $mediaTypeSubtypesConstraint
+     * @param string[] $mediaTypeSubtypesConstraint
      * @return $this
      */
     public function setMediaTypeSubtypesConstraint($mediaTypeSubtypesConstraint)
