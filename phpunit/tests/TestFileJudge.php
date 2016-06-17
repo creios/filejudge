@@ -2,6 +2,8 @@
 
 namespace Creios\FileJudge;
 
+use Creios\FileJudge\Judgement\FileJudgementBuilder;
+
 class TestFileJudge extends \PHPUnit_Framework_TestCase
 {
 
@@ -12,6 +14,14 @@ class TestFileJudge extends \PHPUnit_Framework_TestCase
             ->addMediaTypeSubtypeConstraint("png")
             ->addMediaTypeSubtypeConstraint("jpg")->judge(__DIR__ . "/../assets/image.png");
 
+        $assertedFileJudgement = (new FileJudgementBuilder())
+            ->setMediaType("image")
+            ->setMediaTypeSubtype("png")
+            ->setMediaTypesConstraint(["image"])
+            ->setMediaTypeSubtypesConstraint(["png","jpg"])
+            ->passed()
+            ->build();
+
         $this->assertTrue($fileJudgement->hasPassed());
         $this->assertFalse($fileJudgement->hasMediaTypeConstraintFailed());
         $this->assertFalse($fileJudgement->hasMediaTypeSubtypeConstraintFailed());
@@ -19,6 +29,7 @@ class TestFileJudge extends \PHPUnit_Framework_TestCase
         $this->assertEquals(["png", "jpg"], $fileJudgement->getMediaTypeSubtypesConstraint());
         $this->assertEquals("image", $fileJudgement->getMediaType());
         $this->assertEquals("png", $fileJudgement->getMediaTypeSubtype());
+        $this->assertEquals($assertedFileJudgement, $fileJudgement);
     }
 
     public function testMediaTypeFailed()
