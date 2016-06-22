@@ -18,7 +18,8 @@ class TestFileJudge extends \PHPUnit_Framework_TestCase
             ->setMediaType("image")
             ->setMediaTypeSubtype("png")
             ->setMediaTypesConstraint(["image"])
-            ->setMediaTypeSubtypesConstraint(["png","jpg"])
+            ->setMediaTypeSubtypesConstraint(["png", "jpg"])
+            ->setFileSize(5447)
             ->passed()
             ->build();
 
@@ -29,7 +30,24 @@ class TestFileJudge extends \PHPUnit_Framework_TestCase
         $this->assertEquals(["png", "jpg"], $fileJudgement->getMediaTypeSubtypesConstraint());
         $this->assertEquals("image", $fileJudgement->getMediaType());
         $this->assertEquals("png", $fileJudgement->getMediaTypeSubtype());
+
         $this->assertEquals($assertedFileJudgement, $fileJudgement);
+    }
+
+    public function testApplyingProperties()
+    {
+        $fileJudgement = (new FileJudge())->judge(__DIR__ . "/../assets/image.png");
+
+        $this->assertTrue($fileJudgement->hasPassed());
+
+        $this->assertFalse($fileJudgement->hasMaxFileSizeConstraintFailed());
+        $this->assertFalse($fileJudgement->hasMinFileSizeConstraintFailed());
+        $this->assertFalse($fileJudgement->hasMediaTypeConstraintFailed());
+        $this->assertFalse($fileJudgement->hasMediaTypeSubtypeConstraintFailed());
+
+        $this->assertEquals(5447, $fileJudgement->getFileSize());
+        $this->assertEquals("image", $fileJudgement->getMediaType());
+        $this->assertEquals("png", $fileJudgement->getMediaTypeSubtype());
     }
 
     public function testMediaTypeFailed()

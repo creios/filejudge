@@ -51,23 +51,29 @@ class FileJudge
     public function judge($filepath)
     {
         $this->setFilepath($filepath);
+
         $fileJudgementBuilder = (new FileJudgementBuilder())->passed();
+        $fileJudgementBuilder = $this->applyFileProperties($fileJudgementBuilder);
         $fileJudgementBuilder = $this->actualFileJudge($fileJudgementBuilder);
         return $fileJudgementBuilder->build();
     }
 
     /**
-     * @param string $filepath
-     * @throws \Exception
+     * @param FileJudgementBuilder $fileJudgementBuilder
+     * @return FileJudgementBuilder
      */
-    protected function setFilepath($filepath)
+    protected function applyFileProperties(FileJudgementBuilder $fileJudgementBuilder)
     {
-        if (!file_exists($filepath)) {
-            throw new \Exception("File does not exist");
-        }
-        $this->filepath = $filepath;
+        $this->actualFileSize = filesize($this->filepath);
+        $finfo = new \finfo(FILEINFO_MIME_TYPE);
+        $this->actualMediaType = explode("/", $finfo->file($this->filepath))[0];
+        $this->actualMediaTypeSubtype = explode("/", $finfo->file($this->filepath))[1];
+        $fileJudgementBuilder->setFileSize($this->actualFileSize);
+        $fileJudgementBuilder->setMediaType($this->actualMediaType);
+        $fileJudgementBuilder->setMediaTypeSubtype($this->actualMediaTypeSubtype);
+        return $fileJudgementBuilder;
     }
-
+   
     /**
      * @param FileJudgementBuilder $fileJudgementBuilder
      * @return FileJudgementBuilder
@@ -77,22 +83,18 @@ class FileJudge
         if ($this->maxFileSizeConstraint != null) {
             if ($this->judgeMaxFileSize() == false) $fileJudgementBuilder->maxFileSizeConstraintFailed()->failed();
             $fileJudgementBuilder->setMaxFileSizeConstraint($this->maxFileSizeConstraint);
-            $fileJudgementBuilder->setFileSize($this->actualFileSize);
         }
         if ($this->minFileSizeConstraint != null) {
             if ($this->judgeMinFileSize() == false) $fileJudgementBuilder->minFileSizeConstraintFailed()->failed();
             $fileJudgementBuilder->setMinFileSizeConstraint($this->minFileSizeConstraint);
-            $fileJudgementBuilder->setFileSize($this->actualFileSize);
         }
         if (count($this->mediaTypesConstraint) > 0) {
             if ($this->judgeMediaType() == false) $fileJudgementBuilder->mediaTypeConstraintFailed()->failed();
             $fileJudgementBuilder->setMediaTypesConstraint($this->mediaTypesConstraint);
-            $fileJudgementBuilder->setMediaType($this->actualMediaType);
         }
         if (count($this->mediaTypeSubtypesConstraint) > 0) {
             if ($this->judgeMediaTypeSubtype() == false) $fileJudgementBuilder->mediaTypeSubtypeConstraintFailed()->failed();
             $fileJudgementBuilder->setMediaTypeSubtypesConstraint($this->mediaTypeSubtypesConstraint);
-            $fileJudgementBuilder->setMediaTypeSubtype($this->actualMediaTypeSubtype);
         }
         return $fileJudgementBuilder;
     }
@@ -102,8 +104,32 @@ class FileJudge
      */
     protected function judgeMaxFileSize()
     {
-        $this->actualFileSize = filesize($this->filepath);
         return $this->lesserEquals($this->actualFileSize, $this->maxFileSizeConstraint);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function judgeMinFileSize()
+    {
+        return $this->greaterEquals($this->actualFileSize, $this->minFileSizeConstraint);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function judgeMediaType()
+    {
+        return in_array($this->actualMediaType, $this->mediaTypesConstraint);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function judgeMediaTypeSubtype()
+    {
+
+        return in_array($this->actualMediaTypeSubtype, $this->mediaTypeSubtypesConstraint);
     }
 
     /**
@@ -131,25 +157,6 @@ class FileJudge
      * @param $asserted
      * @return bool
      */
-    protected function equal($actual, $asserted)
-    {
-        return $actual === $asserted;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function judgeMinFileSize()
-    {
-        $this->actualFileSize = filesize($this->filepath);
-        return $this->greaterEquals($this->actualFileSize, $this->minFileSizeConstraint);
-    }
-
-    /**
-     * @param $actual
-     * @param $asserted
-     * @return bool
-     */
     protected function greaterEquals($actual, $asserted)
     {
         return $this->greater($actual, $asserted) || $this->equal($actual, $asserted);
@@ -166,23 +173,25 @@ class FileJudge
     }
 
     /**
+     * @param $actual
+     * @param $asserted
      * @return bool
      */
-    protected function judgeMediaType()
+    protected function equal($actual, $asserted)
     {
-        $finfo = new \finfo(FILEINFO_MIME_TYPE);
-        $this->actualMediaType = explode("/", $finfo->file($this->filepath))[0];
-        return in_array($this->actualMediaType, $this->mediaTypesConstraint);
+        return $actual === $asserted;
     }
 
     /**
-     * @return bool
+     * @param string $filepath
+     * @throws \Exception
      */
-    protected function judgeMediaTypeSubtype()
+    protected function setFilepath($filepath)
     {
-        $finfo = new \finfo(FILEINFO_MIME_TYPE);
-        $this->actualMediaTypeSubtype = explode("/", $finfo->file($this->filepath))[1];
-        return in_array($this->actualMediaTypeSubtype, $this->mediaTypeSubtypesConstraint);
+        if (!file_exists($filepath)) {
+            throw new \Exception("File does not exist");
+        }
+        $this->filepath = $filepath;
     }
 
     /**
