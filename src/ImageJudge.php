@@ -45,10 +45,26 @@ class ImageJudge extends FileJudge
     {
         $this->setFilepath($filepath);
         $imageJudgementBuilder = (new ImageJudgementBuilder())->passed();
+        $imageJudgementBuilder = $this->applyFileProperties($imageJudgementBuilder);
+        /** @var ImageJudgementBuilder $imageJudgementBuilder */
+        $imageJudgementBuilder = $this->applyImageProperties($imageJudgementBuilder);
         /** @var ImageJudgementBuilder $imageJudgementBuilder */
         $imageJudgementBuilder = $this->actualFileJudge($imageJudgementBuilder);
         $imageJudgementBuilder = $this->actualImageJudge($imageJudgementBuilder);
         return $imageJudgementBuilder->build();
+    }
+
+    /**
+     * @param ImageJudgementBuilder $imageJudgementBuilder
+     * @return ImageJudgementBuilder
+     */
+    protected function applyImageProperties(ImageJudgementBuilder $imageJudgementBuilder)
+    {
+        $this->actualWidth = getimagesize($this->filepath)[0];
+        $this->actualHeight = getimagesize($this->filepath)[1];
+        $imageJudgementBuilder->setHeight($this->actualHeight);
+        $imageJudgementBuilder->setWidth($this->actualWidth);
+        return $imageJudgementBuilder;
     }
 
     /**
@@ -60,22 +76,18 @@ class ImageJudge extends FileJudge
         if ($this->maxHeightConstraint != null) {
             if ($this->judgeMaxHeight() == false) $imageJudgementBuilder->maxHeightFailed()->failed();
             $imageJudgementBuilder->setMaxHeightConstraint($this->maxHeightConstraint);
-            $imageJudgementBuilder->setHeight($this->actualHeight);
         }
         if ($this->minHeightConstraint != null) {
             if ($this->judgeMinHeight() == false) $imageJudgementBuilder->minHeightFailed()->failed();
             $imageJudgementBuilder->setMinHeightConstraint($this->minHeightConstraint);
-            $imageJudgementBuilder->setHeight($this->actualHeight);
         }
         if ($this->maxWidthConstraint != null) {
             if ($this->judgeMaxWidth() == false) $imageJudgementBuilder->maxWidthFailed()->failed();
             $imageJudgementBuilder->setMaxWidthConstraint($this->maxWidthConstraint);
-            $imageJudgementBuilder->setWidth($this->actualWidth);
         }
         if ($this->minWidthConstraint != null) {
             if ($this->judgeMinWidth() == false) $imageJudgementBuilder->minWidthFailed()->failed();
             $imageJudgementBuilder->setMinWidthConstraint($this->minWidthConstraint);
-            $imageJudgementBuilder->setWidth($this->actualWidth);
         }
         return $imageJudgementBuilder;
     }
@@ -85,7 +97,6 @@ class ImageJudge extends FileJudge
      */
     protected function judgeMaxHeight()
     {
-        $this->actualHeight = getimagesize($this->filepath)[1];
         return $this->lesserEquals($this->actualHeight, $this->maxHeightConstraint);
     }
 
@@ -94,7 +105,6 @@ class ImageJudge extends FileJudge
      */
     protected function judgeMinHeight()
     {
-        $this->actualHeight = getimagesize($this->filepath)[1];
         return $this->greaterEquals($this->actualHeight, $this->minHeightConstraint);
     }
 
@@ -103,7 +113,7 @@ class ImageJudge extends FileJudge
      */
     protected function judgeMaxWidth()
     {
-        $this->actualWidth = getimagesize($this->filepath)[0];
+
         return $this->lesserEquals($this->actualWidth, $this->maxWidthConstraint);
     }
 
@@ -112,7 +122,6 @@ class ImageJudge extends FileJudge
      */
     protected function judgeMinWidth()
     {
-        $this->actualWidth = getimagesize($this->filepath)[0];
         return $this->greaterEquals($this->actualWidth, $this->minWidthConstraint);
     }
 

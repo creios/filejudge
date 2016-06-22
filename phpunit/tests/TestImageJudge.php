@@ -2,8 +2,43 @@
 
 namespace Creios\FileJudge;
 
+use Creios\FileJudge\Judgement\ImageJudgementBuilder;
+
 class TestImageJudge extends \PHPUnit_Framework_TestCase
 {
+
+    public function testApplyProperties()
+    {
+        $imageJudgement = (new ImageJudge())->judge(__DIR__ . "/../assets/image.png");
+
+        $assertedImageJudgement = (new ImageJudgementBuilder())
+            ->setMediaType("image")
+            ->setMediaTypeSubtype("png")
+            ->setFileSize(5447)
+            ->setHeight(100)
+            ->setWidth(100)
+            ->passed()
+            ->build();
+
+        $this->assertEquals($assertedImageJudgement, $imageJudgement);
+        
+        $this->assertTrue($imageJudgement->hasPassed());
+
+        $this->assertFalse($imageJudgement->hasMaxFileSizeConstraintFailed());
+        $this->assertFalse($imageJudgement->hasMinFileSizeConstraintFailed());
+        $this->assertFalse($imageJudgement->hasMediaTypeConstraintFailed());
+        $this->assertFalse($imageJudgement->hasMediaTypeSubtypeConstraintFailed());
+        $this->assertFalse($imageJudgement->hasMaxWidthConstraintFailed());
+        $this->assertFalse($imageJudgement->hasMinWidthConstraintFailed());
+        $this->assertFalse($imageJudgement->hasMaxHeightConstraintFailed());
+        $this->assertFalse($imageJudgement->hasMinHeightConstraintFailed());
+
+        $this->assertEquals(5447, $imageJudgement->getFileSize());
+        $this->assertEquals(100, $imageJudgement->getWidth());
+        $this->assertEquals(100, $imageJudgement->getHeight());
+        $this->assertEquals("image", $imageJudgement->getMediaType());
+        $this->assertEquals("png", $imageJudgement->getMediaTypeSubtype());
+    }
 
     public function testMaxMinWidth()
     {
