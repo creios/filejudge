@@ -2,12 +2,26 @@
 
 namespace Creios\FileJudge;
 
+use Creios\FileJudge\Judgement\ImageJudgementBuilder;
+
 class TestImageJudge extends \PHPUnit_Framework_TestCase
 {
 
     public function testApplyProperties()
     {
         $imageJudgement = (new ImageJudge())->judge(__DIR__ . "/../assets/image.png");
+
+        $assertedImageJudgement = (new ImageJudgementBuilder())
+            ->setMediaType("image")
+            ->setMediaTypeSubtype("png")
+            ->setFileSize(5447)
+            ->setHeight(100)
+            ->setWidth(100)
+            ->passed()
+            ->build();
+
+        $this->assertEquals($assertedImageJudgement, $imageJudgement);
+        
         $this->assertTrue($imageJudgement->hasPassed());
 
         $this->assertFalse($imageJudgement->hasMaxFileSizeConstraintFailed());

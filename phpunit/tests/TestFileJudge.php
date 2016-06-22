@@ -38,6 +38,14 @@ class TestFileJudge extends \PHPUnit_Framework_TestCase
     {
         $fileJudgement = (new FileJudge())->judge(__DIR__ . "/../assets/image.png");
 
+        $assertedFileJudgement = (new FileJudgementBuilder())
+            ->setMediaType("image")
+            ->setMediaTypeSubtype("png")
+            ->setFileSize(5447)
+            ->passed()
+            ->build();
+
+        $this->assertEquals($assertedFileJudgement, $fileJudgement);
         $this->assertTrue($fileJudgement->hasPassed());
 
         $this->assertFalse($fileJudgement->hasMaxFileSizeConstraintFailed());
